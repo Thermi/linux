@@ -586,7 +586,7 @@ static int meson_cpufreq_init(struct cpufreq_policy *policy)
 	}
 
 #ifdef CONFIG_ARCH_MESON64_ODROID_COMMON
-	if (board_is_odroidn2() || board_is_odroidc4()) {
+	if (board_is_odroidn2() || board_is_odroidc4() || board_is_bananapi_m5() || board_is_bananapi_m2_pro()) {
 		int i = 0;
 		for (i = 0; (freq_table[cur_cluster][i].frequency != CPUFREQ_TABLE_END)
 				&& max_freq[cur_cluster]; i++) {
@@ -709,7 +709,7 @@ __setup("max_freq_a53=", get_max_freq_a53);
 
 static int __init get_max_freq_a55(char *str)
 {
-	if (board_is_odroidc4())
+	if (board_is_odroidc4() || board_is_bananapi_m5() || board_is_bananapi_m2_pro())
 		return get_max_freq_cortex(0, str);
 	return -EINVAL;
 }
@@ -822,7 +822,7 @@ static int meson_cpufreq_probe(struct platform_device *pdev)
 			max_freq[0] = 1896000; /* defalut freq for A53 is 1.896GHz */
 		if (!max_freq[1])
 			max_freq[1] = 1800000; /* defalut freq for A73 is 1.800GHz */
-	} else if (board_is_odroidc4()) {
+	} else if (board_is_odroidc4() || board_is_bananapi_m5() || board_is_bananapi_m2_pro()) {
 		if (!max_freq[0])
 			max_freq[0] = 1800000; /* defalut freq for A55 is 1.800GHz */
 	}
